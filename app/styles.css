@@ -1,0 +1,12 @@
+div.man {            
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    position: absolute;
+    background-size: cover;
+}
+
+div.man:hover {
+    border-color: #66afe9;
+    box-shadow: 0 0 15px rgba(191,63,63, 0.6);
+}

@@ -1,0 +1,6 @@
+<img src="{{backgroundImg}}" />
+
+<div class="people">
+    <div *ngFor="#employee of employees" data-id="{{employee.Id}}" class="man" style="background-image: url({{employee.Photo}}); top: {{employee.Location.Y}}; left: {{employee.Location.X}}" (click)="onFaceClick($event)">
+    </div>
+</div>
