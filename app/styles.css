@@ -2,11 +2,29 @@ div.man {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    position: absolute;
     background-size: cover;
+    position: absolute;
+}
+.man-container{
+    position: absolute;
 }
 
 div.man:hover {
     border-color: #66afe9;
     box-shadow: 0 0 15px rgba(191,63,63, 0.6);
+}
+
+.info {
+    display: none;
+}
+
+.info.opened {
+    display: block;
+    position: absolute;
+    background: white;
+    width: 300px;
+    height: 200px;
+    box-shadow: 1px 1px 2px 2px;
+    word-wrap: break-word;
+    /*padding-top: 80px;*/
 }

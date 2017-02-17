@@ -1,6 +1,12 @@
 <img src="{{backgroundImg}}" />
 
 <div class="people">
-    <div *ngFor="#employee of employees" data-id="{{employee.Id}}" class="man" style="background-image: url({{employee.Photo}}); top: {{employee.Location.Y}}; left: {{employee.Location.X}}" (click)="onFaceClick($event)">
+    <div *ngFor="#employee of employees" class="man-container" style="top: {{employee.Location.Y}}; left: {{employee.Location.X}}">
+        <div class="man" style="background-image: url({{employee.Photo}})" (click)="onFaceClick(employee)"></div>
+        <div class="info {{employee.Opened ? 'opened' : ''}}">
+            <p class="employee-info"><span><img src="{{employee.Photo}}" width="100" heigth="100"/></span></p>
+            <p class="employee-info"><span>{{employee.Id}}</span></p>
+            <p class="employee-info"><span>{{employee.Location.X}}</span></p>
+        </div>
     </div>
 </div>
