@@ -1,11 +1,13 @@
 Floors:
-<select [(ngModel)]="selectedFloor.Number">
+<select #item (change)="onFloorChange(item.value)">
     <option *ngFor="#floor of floors" [value]="floor.Number">
         {{floor.Number}}
     </option>
 </select>
 
-<img src="{{backgroundImg}}" />
+<div>
+    <img src="{{backgroundImg}}" />
+</div>
 
 <div class="people">
     <div *ngFor="#employee of employees" class="employee-container" style="top: {{employee.Location.Y}}; left: {{employee.Location.X}}">

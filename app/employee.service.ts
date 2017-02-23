@@ -7,13 +7,13 @@ import 'rxjs/Rx';
 @Injectable()
 export class EmployeeService
 {
-    private employeeUrl = 'http://localhost:50605/api/employee/9';
+    private employeeUrl = 'http://localhost:50605/api/employee/';
 
     constructor (private http: Http) {}
 
     getEmployee(floor: number) : Observable<Employees>
     {
-        return this.http.get(this.employeeUrl)
+        return this.http.get(`${this.employeeUrl}${floor}`)
                         .map(this.mapData);
     }
 

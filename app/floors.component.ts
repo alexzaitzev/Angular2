@@ -16,11 +16,10 @@ import {Observable}             from 'rxjs/Observable';
 
 export class FloorsComponent
 {
-    backgroundImg: string;
-    employees = [];
-    floors = [];
-
-    selectedFloor: Floor = new Floor(9);
+    private employeeService;
+    private backgroundImg: string;
+    private employees = [];
+    private floors = [];
 
     onFaceClick(o) {
         this.closeEmployeesCard();
@@ -36,17 +35,28 @@ export class FloorsComponent
         this.employees.forEach(e => e.Opened = false);
     }
 
-    constructor(employeeService: EmployeeService, floorsService: FloorsService)
-    {
-        floorsService
-            .getFloors()
-            .subscribe(x => this.floors = x);
+    onFloorChange(floor) {
+        this.getEmployees(floor);
+    }
 
-        employeeService
-            .getEmployee(this.selectedFloor.Number)
+    private getEmployees(floor:number) {
+        this.employeeService
+            .getEmployee(floor)
             .subscribe(x => {
                 this.employees = x.Employees;
                 this.backgroundImg = x.Map;
+            });
+    }
+
+    constructor(employeeService: EmployeeService, floorsService: FloorsService)
+    {
+        this.employeeService = employeeService;
+
+        floorsService
+            .getFloors()
+            .subscribe(x => {
+                this.floors = x;
+                this.getEmployees(this.floors[0].Number);
             });
     }
 }
