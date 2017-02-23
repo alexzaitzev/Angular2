@@ -1,31 +1,52 @@
-import {Component}          from 'angular2/core'
-import {EmployeeService}    from './employee.service'
-import {AutoGrowDirective}  from './auto-grow.directive'
-import {HTTP_PROVIDERS}     from 'angular2/http';
+import {Component, Input, Output, EventEmitter}          from 'angular2/core'
+import {EmployeeService}        from './employee.service'
+import {AutoGrowDirective}      from './auto-grow.directive'
+import {HTTP_PROVIDERS}         from 'angular2/http';
+import {FloorsService, Floor}   from './floors.service'
+import {Observable}             from 'rxjs/Observable';
+
 
 @Component({
     selector: 'floors',
     styleUrls: ['app/styles.css'],
     templateUrl: 'app/templates/floor.template.html',
-    providers: [EmployeeService, HTTP_PROVIDERS],
+    providers: [EmployeeService, FloorsService, HTTP_PROVIDERS],
     directives: [AutoGrowDirective]
 })
 
 export class FloorsComponent
 {
-    backgroundImg: string = "https://s-media-cache-ak0.pinimg.com/originals/86/71/9f/86719f83b01c5e253426be7078658c1a.jpg";
+    backgroundImg: string;
     employees = [];
-    errorMessage;
+    floors = [];
+
+    selectedFloor: Floor = new Floor(9);
 
     onFaceClick(o) {
-        this.employees.filter(e => e.Id === o.Id)[0].Opened = !o.Opened;
+        this.closeEmployeesCard();
+        this.employees.filter(e => e.Id === o.Id)[0].Opened = true;
         console.log(o);
     }
 
-    constructor(employeeService: EmployeeService)
+    closeEmployeeCard(o) {
+        this.employees.filter(e => e.Id === o.Id)[0].Opened = false;
+    }
+
+    closeEmployeesCard() {
+        this.employees.forEach(e => e.Opened = false);
+    }
+
+    constructor(employeeService: EmployeeService, floorsService: FloorsService)
     {
+        floorsService
+            .getFloors()
+            .subscribe(x => this.floors = x);
+
         employeeService
-            .getEmployee()
-            .subscribe(x => this.employees = x);
+            .getEmployee(this.selectedFloor.Number)
+            .subscribe(x => {
+                this.employees = x.Employees;
+                this.backgroundImg = x.Map;
+            });
     }
 }

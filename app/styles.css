@@ -1,21 +1,36 @@
-div.man {            
+p {
+    margin: 0 0 5px 0;
+}
+
+.employee-container {
+    position: absolute;
+}
+
+div.employee {            
     width: 80px;
     height: 80px;
     border-radius: 50%;
     background-size: cover;
     position: absolute;
-}
-.man-container{
-    position: absolute;
+    border: 2px solid #ccc;
+    z-index: 1;
 }
 
-div.man:hover {
-    border-color: #66afe9;
-    box-shadow: 0 0 15px rgba(191,63,63, 0.6);
+div.employee:hover {
+    box-shadow: 0 0 10px 5px rgba(191,63,63, 0.6);
+}
+
+.employee-photo {
+    width: 100px;
+    height: 100px;
+    float: left;
+    padding: 0 5px 3px 0;
 }
 
 .info {
+    font-family: 'Roboto Slab', serif;
     display: none;
+    padding: 10px;
 }
 
 .info.opened {
@@ -24,7 +39,21 @@ div.man:hover {
     background: white;
     width: 300px;
     height: 200px;
-    box-shadow: 1px 1px 2px 2px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
     word-wrap: break-word;
-    /*padding-top: 80px;*/
+    overflow: auto;
+    z-index: 2;
 }
+
+.info p span.name {
+    font-weight: 700;
+    font-size: 1.3em;
+}
+
+ .info p a.close-btn {
+     margin-right: 5px;
+     position:absolute;
+     top:0;
+     right:0;
+     cursor: pointer;
+ }

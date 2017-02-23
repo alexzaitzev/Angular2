@@ -1,12 +1,24 @@
+Floors:
+<select [(ngModel)]="selectedFloor.Number">
+    <option *ngFor="#floor of floors" [value]="floor.Number">
+        {{floor.Number}}
+    </option>
+</select>
+
 <img src="{{backgroundImg}}" />
 
 <div class="people">
-    <div *ngFor="#employee of employees" class="man-container" style="top: {{employee.Location.Y}}; left: {{employee.Location.X}}">
-        <div class="man" style="background-image: url({{employee.Photo}})" (click)="onFaceClick(employee)"></div>
+    <div *ngFor="#employee of employees" class="employee-container" style="top: {{employee.Location.Y}}; left: {{employee.Location.X}}">
+        <div class="employee" style="background-image: url({{employee.Photo}})" (click)="onFaceClick(employee)"></div>
         <div class="info {{employee.Opened ? 'opened' : ''}}">
-            <p class="employee-info"><span><img src="{{employee.Photo}}" width="100" heigth="100"/></span></p>
-            <p class="employee-info"><span>{{employee.Id}}</span></p>
-            <p class="employee-info"><span>{{employee.Location.X}}</span></p>
+            <p><a class="close-btn" (click)="closeEmployeeCard(employee)">x</a></p>
+            <p><span><img src="{{employee.Photo}}" class="employee-photo" /></span></p>
+            <p><span class="name">{{employee.Name}}</span></p>
+            <p><span class="role">{{employee.Role}}</span></p>
+            <p><span class="email">{{employee.Email}}</span></p>
+            <p *ngFor="#social of employee.Socials">
+                <span>{{social.Name}}: {{social.Link}}</span>
+            </p>
         </div>
     </div>
 </div>

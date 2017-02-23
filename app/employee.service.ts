@@ -1,66 +1,89 @@
 import { Injectable } from 'angular2/core';
-import { Http, Response, HTTP_PROVIDERS } from 'angular2/http';
+import { Http, Headers, Response, HTTP_PROVIDERS } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/catch'
-import 'rxjs/add/operator/toPromise';
+import 'rxjs/Rx';
 
 @Injectable()
 export class EmployeeService
 {
-    private employeeUrl = 'https://virtserver.swaggerhub.com/alexzaitzev/stages/1.0.2/floors/10';
+    private employeeUrl = 'http://localhost:50605/api/employee/9';
 
     constructor (private http: Http) {}
 
-    getEmployee() : Observable<Employee[]>
+    getEmployee(floor: number) : Observable<Employees>
     {
         return this.http.get(this.employeeUrl)
                         .map(this.mapData);
-
-        // return [
-        //     {
-        //         Id: 1,
-        //         Photo: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTWQd6S3Ua282NvPgUIiY_xuI49vjw1wsnEhxbl8OWUanJ4gbg8",
-        //         Location: { X: 344, Y: 197}
-        //     },
-        //     {
-        //         Id: 2,
-        //         Photo: "https://blog.interviewmocha.com/wp-content/uploads/2016/01/Scott-Hanselman-150x150.jpeg",
-        //         Location: { X: 479, Y: 197}
-        //     },
-        //     {
-        //         Id: 3,
-        //         Photo: "https://pbs.twimg.com/profile_images/378800000550413574/1bda93983b282cc4572e4ae7f1fae3f4_400x400.jpeg",
-        //         Location: { X: 623, Y: 197}
-        //     }
-        // ];
     }
 
-    private mapData(res: Response) {
-        let people = res.json().employees.map(x => new Employee(x));
+    private mapData(res: Response)
+    {
+        let people = new Employees(res.json());
 
         return people || { };
     }
 }
 
+export class Employees
+{
+    constructor(o)
+    {
+        this.Number = o.number;
+        this.Map = o.scheme;
+        o.employees.forEach(e => this.Employees.push(new Employee(e)));
+    }
+    
+    Number: number;
+    Map: string;
+    Employees: Employee[] = [];
+}
+
 export class Employee
 {
-    constructor(o) {
+    constructor(o)
+    {
         this.Id = o.id;
+        this.Name = o.name;
+        this.Role = o.role;
+        this.Email = o.email;
         this.Photo = o.photo;
-        this.Location = o.location;
+        this.Location = new Coordinates(o.location);
+        o.socials.forEach(x => this.Socials.push(new Social(x)));
         this.Opened = false;
     }
 
     Id: number;
+    Name: number;
+    Email: string;
+    Role: string;
     Photo: string;
     Location: Coordinates;
+    Socials: Social[] = [];
+
     Opened: boolean;
+}
+
+export class Social
+{
+    constructor(o)
+    {
+        this.Name = o.name;
+        this.Link = o.link;
+    }
+
+    Name: string;
+    Link: string;
 }
 
 export class Coordinates
 {
+    constructor(o)
+    {
+        this.X = o.x;
+        this.Y = o.y;
+    }
+
     X: number;
     Y: number;
 }
