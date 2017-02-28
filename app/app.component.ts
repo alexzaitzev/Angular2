@@ -4,7 +4,7 @@ import {FloorsComponent} from './floors.component'
 @Component({
     selector: 'my-app',
     template: `
-        <h1>Floors plan</h1>
+        <h1>SDV workplaces</h1>
         <floors></floors>
         `,
     directives: [FloorsComponent]

@@ -37,6 +37,13 @@ export class FloorsComponent
 
     onFloorChange(floor) {
         this.getEmployees(floor);
+    }   
+
+    search(query:string){
+        console.log(query);
+        // var a = this.employees.filter(e => e.Name.toLowerCase().search(query) > 0);
+        var a = this.employees.filter(e => e.Name.toLowerCase().indexOf(query) >= 0);
+        console.log(a);        
     }
 
     private getEmployees(floor:number) {

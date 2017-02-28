@@ -1,9 +1,15 @@
-Floors:
-<select #item (change)="onFloorChange(item.value)">
-    <option *ngFor="#floor of floors" [value]="floor.Number">
-        {{floor.Number}}
-    </option>
-</select>
+<div>
+    Search: <input type="text" #query (keyup)="search(query.value)" />
+</div>
+
+<div>
+    Floors:
+    <select #item (change)="onFloorChange(item.value)">
+        <option *ngFor="#floor of floors" [value]="floor.Number">
+            {{floor.Number}}
+        </option>
+    </select>
+</div>
 
 <div>
     <img src="{{backgroundImg}}" />
